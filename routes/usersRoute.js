@@ -56,6 +56,19 @@ router.get('/users', middleware.restricted, (req, res) => {
     })
 })
 
+router.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy(error => {
+      if (error) {
+        res.status(500).json({ message: 'User failed to log out' });
+      }
+      res.status(200).json({ message: 'User has logged out' })
+    });
+  } else {
+    res.status(200).json({ message: 'already logged out' })
+  }
+})
+
 module.exports = router
 
 
